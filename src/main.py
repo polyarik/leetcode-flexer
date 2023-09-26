@@ -4,8 +4,8 @@ import requests
 BASE_URL = "https://leetcode.com/graphql"
 
 
-def getLeetCodeData(username: str, query_fields: dict):
-    query_body = constructQueryBody(query_fields)
+def getLeetCodeData(username: str, query_fields: dict) -> dict | None:
+    query_body = parseFields(query_fields)
     query_data = f'matchedUser(username: "{username}") {{{query_body}}}'
     full_url = f"{BASE_URL}?query=query{{{query_data}}}"
     print(full_url)
@@ -19,18 +19,19 @@ def getLeetCodeData(username: str, query_fields: dict):
         print(f"An error occurred: {error}")
     else:
         json = response.json()
-        # TODO: build result
         data = json["data"]["matchedUser"]
         return data
 
 
-def constructQueryBody(query_fields: dict) -> str:
-    query_body = ""
+def parseFields(fields: dict) -> str:
+    result = ""
 
-    for field, values in query_fields.items():
-        if field == "general":
-            query_body += " ".join(values) + " "
-        else:
-            query_body += f'{field} {{{" ".join(values)}}}' + " "
+    for key, value in fields.items():
+        if key == "general":
+            result += " " + " ".join(value)
+        elif isinstance(value, list):
+            result += " " + f"{key} {{ {' '.join(value)} }}"
+        elif isinstance(value, dict):
+            result += " " + f"{key} {{ {parseFields(value)} }}"
 
-    return query_body
+    return result
