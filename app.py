@@ -1,4 +1,4 @@
-from src.main import get_leetcode_data
+from src.leetcode_api import get_leetcode_data
 from config import leetcode_name, query_fields
 
 
