@@ -4,4 +4,6 @@ from config import leetcode_name, query_fields
 
 if __name__ == "__main__":
     data = getLeetCodeData(leetcode_name, query_fields)
-    print(data)
+
+    if data:
+        print(data)

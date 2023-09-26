@@ -10,14 +10,18 @@ def getLeetCodeData(username: str, query_fields: dict):
     full_url = f"{BASE_URL}?query=query{{{query_data}}}"
     print(full_url)
 
-    response = requests.get(full_url)
-    print(response.status_code)
-    print(response)
-
-    json = response.json()
-    # TODO: build result
-    data = json["data"]["matchedUser"]
-    return data
+    try:
+        response = requests.get(full_url)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as error:
+        print(f"Request failed: {error}")
+    except requests.exceptions.RequestException as error:
+        print(f"An error occurred: {error}")
+    else:
+        json = response.json()
+        # TODO: build result
+        data = json["data"]["matchedUser"]
+        return data
 
 
 def constructQueryBody(query_fields: dict) -> str:
