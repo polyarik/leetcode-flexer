@@ -1,29 +1,56 @@
 leetcode_name = "PolYarik"  # your LeetCode username
 
-query_fields = {  # data requested from LeetCode
-    "general": [
-        "username",
-        "submissionCalendar",
-    ],
-    "contributions": [
-        "points",
-    ],
-    "profile": [
-        "ranking",
-        "reputation",
-    ],
-    "submitStats": {
-        "acSubmissionNum": [
-            "difficulty",
-            "count",
-            "submissions",
+# data requested from LeetCode # uncomment to request!
+query_fields = {
+    "matchedUser": {
+        # "general": [
+        #     "username",
+        #     "submissionCalendar",
+        # ],
+        # "contributions": [
+        #     "points",
+        # ],
+        "profile": [
+            "ranking",
+            # "reputation",
         ],
-        "totalSubmissionNum": [
-            "difficulty",
-            "count",
-            "submissions",
-        ],
+        "submitStats": {
+            "acSubmissionNum": [
+                "difficulty",
+                "count",
+                "submissions",
+            ],
+            # "totalSubmissionNum": [
+            #     "difficulty",
+            #     "count",
+            #     "submissions",
+            # ],
+        },
     },
+    # "userContestRanking": {
+    #     "general": [
+    #         "attendedContestsCount",
+    #         "rating",
+    #         "globalRanking",
+    #         "totalParticipants",
+    #         "topPercentage",
+    #     ]
+    # },
+    # "userContestRankingHistory": {
+    #     "general": [
+    #         "attended",
+    #         "trendDirection",
+    #         "problemsSolved",
+    #         "totalProblems",
+    #         "finishTimeInSeconds",
+    #         "rating",
+    #         "ranking",
+    #     ],
+    #     "contest": [
+    #         "title",
+    #         "startTime",
+    #     ],
+    # },
 }
 
 

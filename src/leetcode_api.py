@@ -5,9 +5,8 @@ BASE_URL = "https://leetcode.com/graphql"
 
 
 def get_leetcode_data(username: str, query_fields: dict) -> dict | None:
-    query_body = parse_fields(query_fields)
-    query_data = f'matchedUser(username: "{username}") {{{query_body}}}'
-    full_url = f"{BASE_URL}?query=query{{{query_data}}}"
+    request_body = construct_request_body(query_fields, username)
+    full_url = f"{BASE_URL}?query=query{{{request_body}}}"
     print(full_url)
 
     try:
@@ -19,19 +18,23 @@ def get_leetcode_data(username: str, query_fields: dict) -> dict | None:
         print(f"An error occurred: {error}")
     else:
         json = response.json()
-        data = json["data"]["matchedUser"]
+        data = json["data"]
         return data
 
 
-def parse_fields(fields: dict) -> str:
+# TODO: handle empty fields
+def construct_request_body(query_fields: dict, username: str = None) -> str:
     result = ""
 
-    for key, value in fields.items():
-        if key == "general":
+    for field_name, value in query_fields.items():
+        if username is not None:
+            result += f'{field_name}(username: "{username}") {{{construct_request_body(value)}}}'
+            result += " "
+        elif field_name == "general":
             result += " " + " ".join(value)
         elif isinstance(value, list):
-            result += " " + f"{key} {{ {' '.join(value)} }}"
+            result += " " + f"{field_name} {{ {' '.join(value)} }}"
         elif isinstance(value, dict):
-            result += " " + f"{key} {{ {parse_fields(value)} }}"
+            result += " " + f"{field_name} {{ {construct_request_body(value)} }}"
 
     return result
