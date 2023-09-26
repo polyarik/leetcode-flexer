@@ -4,8 +4,8 @@ import requests
 BASE_URL = "https://leetcode.com/graphql"
 
 
-def getLeetCodeData(username: str, query_fields: dict) -> dict | None:
-    query_body = parseFields(query_fields)
+def get_leetcode_data(username: str, query_fields: dict) -> dict | None:
+    query_body = parse_fields(query_fields)
     query_data = f'matchedUser(username: "{username}") {{{query_body}}}'
     full_url = f"{BASE_URL}?query=query{{{query_data}}}"
     print(full_url)
@@ -23,7 +23,7 @@ def getLeetCodeData(username: str, query_fields: dict) -> dict | None:
         return data
 
 
-def parseFields(fields: dict) -> str:
+def parse_fields(fields: dict) -> str:
     result = ""
 
     for key, value in fields.items():
@@ -32,6 +32,6 @@ def parseFields(fields: dict) -> str:
         elif isinstance(value, list):
             result += " " + f"{key} {{ {' '.join(value)} }}"
         elif isinstance(value, dict):
-            result += " " + f"{key} {{ {parseFields(value)} }}"
+            result += " " + f"{key} {{ {parse_fields(value)} }}"
 
     return result
