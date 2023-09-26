@@ -6,7 +6,7 @@ BASE_URL = "https://leetcode.com/graphql"
 
 def get_leetcode_data(username: str, query_fields: dict) -> dict | None:
     request_body = construct_request_body(query_fields, username)
-    full_url = f"{BASE_URL}?query=query{{{request_body}}}"
+    full_url = f"{BASE_URL}?query=query{{ {request_body} }}"
     print(full_url)
 
     try:
@@ -28,7 +28,7 @@ def construct_request_body(query_fields: dict, username: str = None) -> str:
 
     for field_name, value in query_fields.items():
         if username is not None:
-            result += f'{field_name}(username: "{username}") {{{construct_request_body(value)}}}'
+            result += f'{field_name}(username: "{username}") {{ {construct_request_body(value)} }}'
             result += " "
         elif field_name == "general":
             result += " " + " ".join(value)
