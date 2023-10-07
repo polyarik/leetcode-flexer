@@ -4,7 +4,7 @@ import requests
 BASE_URL = "https://leetcode.com/graphql"
 
 
-def get_leetcode_data(username: str, query_fields: dict) -> dict | None:
+def get_leetcode_data(query_fields: dict, username: str) -> dict | None:
     request_body = construct_request_body(query_fields, username)
     full_url = f"{BASE_URL}?query=query{{ {request_body} }}"
     print(full_url)

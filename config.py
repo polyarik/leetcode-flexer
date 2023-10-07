@@ -1,4 +1,4 @@
-leetcode_name = "PolYarik"  # your LeetCode username
+username = "PolYarik"  # your LeetCode username
 
 # data requested from LeetCode # uncomment to request!
 query_fields = {
