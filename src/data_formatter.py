@@ -1,15 +1,15 @@
 def format_for_telegram_desc(data: dict) -> str:  # example: 🟢 42 🟡 32 🔴 9 | 420690
-    result = ""
+    user_data: dict = data.get("matchedUser", {})
 
-    # TODO - handle errors
-    if "matchedUser" in data:
-        user_data = data["matchedUser"]
+    submit_stats: dict = user_data.get("submitStats", {})
+    ac_submission_num: list = submit_stats.get("acSubmissionNum", [])
+    easy_solved: int = ac_submission_num[1].get("count", 0)
+    medium_solved: int = ac_submission_num[2].get("count", 0)
+    hard_solved: int = ac_submission_num[3].get("count", 0)
 
-        easy_solved = user_data["submitStats"]["acSubmissionNum"][1]["count"]
-        medium_solved = user_data["submitStats"]["acSubmissionNum"][2]["count"]
-        hard_solved = user_data["submitStats"]["acSubmissionNum"][3]["count"]
-        ranking = user_data["profile"]["ranking"]
+    profile: dict = user_data.get("profile", {})
+    ranking: int = profile.get("ranking", 0)
 
-        result = f"🟢 {easy_solved} 🟡 {medium_solved} 🔴 {hard_solved} | {ranking}"
+    result = f"🟢 {easy_solved} 🟡 {medium_solved} 🔴 {hard_solved} | {ranking}"
 
     return result
